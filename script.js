@@ -27,15 +27,12 @@
 // then the game ends 
 // then prompt user to save initials and score 
 
-//for quiz state
-var questionIndex = 0
-var time = questions.length * 30;
-var timerId;
+
 
 
 
 //question array
-var quiz =       [{ title: "Commonly used data types don't include:", 
+var questionsArr = [{title: "Commonly used data types don't include:", 
                    choices: ["strings", "alerts", "booleans", "numbers"],
                    answer: "alerts"
                  },
@@ -60,6 +57,10 @@ var quiz =       [{ title: "Commonly used data types don't include:",
 
               ];
 
+//
+var currQuestionIdx = 0;
+var time = questions.length * 30;
+var timerId;
 
 //variables for the DOM elements
 var beginBtn = document.getElementById("begin");
@@ -72,23 +73,88 @@ var questionsEl = document.getElementById("questions");
 
 
 
-function beginQuiz(){                     //hide start screen
+
+
+
+function beginQuiz(){                     
    var startScreenEl = document.getElementById("start-screen");
-   startScreenEl.setAttribute("class", "hide");     
-   questionsEl.removeAttribute("class");
+     startScreenEl.setAttribute("class", "hide");     //hide start screen
+      questionsEl.removeAttribute("class");
 
-   timerId = setInterval(clockTick, 1000);       //start timer
-   timerEl.textContent = time;
+   timerId = setInterval(function(){     
+    time--;
+    timerEl.textContent = time;   //update the time
+    if (time <= 0){
+      quizEnd();
+    }
+    startQuestion();
+   }, 1000);
 
-   startQuestion();    //knows to move to next function
-  }
+
+   function startQuestion () {
+    var currQuestion = questionsArr[currQuestionIdx];  //need to fix probably
+      var titleEl = document.getElementById("question-title");
+        titleEl.textContent = currentQuestion.title;
+
+    choicesEl.innerHTML = ""; //clear old questions
+
+    currQuestion.choices.forEach(function (choice) {
+        var optionsNode = document.createElement("button");
+          optionsNode.setAttribute("class", "choice");
+           optionsNode.setAttribute("value", choice);
+            optionsNode.textContent = choice;
+
+            optionsNode.onClick = questionClick;
+          choicesEl.appendChild(optionsNode);
+
+    });
+ }
+   
+
+   function questionClick() {          
+    if (this.value !== questions[questionIndex].answer) {
+      time -=10;     //time gets penalized
+      
+      if (time < 0) {
+        time = 0;
+      }
+      timerEl.textContent = time;    //to display new time
+      feedbackEl.textContent = "Right!";
+  
+    } else{
+      feedbackEl.textContent = "Wrong!";
+    }
+  
+    feedbackEl.setAttribute("class", "feedback");
+      setTimeout(function() {
+        feedbackEl.setAttribute("class", "feedback hide");
+        console.log(feedbackEl);
+  
+      }, 2000);
+  
+      currQuestionIdx++;
+
+    if (currQuestionIdx === questionsArr.length) {
+          quizEnd ();
+
+    } else {
+      startQuestion();
+    }
+   }
+   
+   function endQuiz () {
+     clearInterval (timerId);
+        var endScreenEl = document.getElementById("end-screen");  
+          endScreenEl.removeAttribute("class");
+            var finalScoreEl = document.getElementById("final-score");
+            finalScoreEl.textContent = time;
+
+            questionsEl.setAttribute("class", "hide");
+
+      }
+
   
 
-  function startQuestion () {
-
-  }
-  
-  
-  
- 
+            //add event listener to button clicks 
+      document.getElementById("beginBtn").addEventListener("click", beginBtn);
 
