@@ -33,7 +33,9 @@ var time = questions.length * 30;
 var timerId;
 
 
-var questions = [{ title: "Commonly used data types don't include:", 
+
+//question array
+var quiz =       [{ title: "Commonly used data types don't include:", 
                    choices: ["strings", "alerts", "booleans", "numbers"],
                    answer: "alerts"
                  },
@@ -56,8 +58,7 @@ var questions = [{ title: "Commonly used data types don't include:",
                   answer: "console.log"
                 }
 
-                
-                ];
+              ];
 
 
 //variables for the DOM elements
@@ -71,15 +72,15 @@ var questionsEl = document.getElementById("questions");
 
 
 
-function beginQuiz(){
+function beginQuiz(){                     //hide start screen
    var startScreenEl = document.getElementById("start-screen");
-   startScreenEl.setAttribute("class", "hide");
+   startScreenEl.setAttribute("class", "hide");     
    questionsEl.removeAttribute("class");
 
-   timerId = setInterval(clockTick, 1000);
+   timerId = setInterval(clockTick, 1000);       //start timer
    timerEl.textContent = time;
 
-   startQuestion();
+   startQuestion();    //knows to move to next function
   }
   
 
