@@ -7,7 +7,34 @@
     <link rel="stylesheet" href="style.css" />
 </head>
 <body>
+   
+<div class="timer">Timer: <span id="time">0</span></div>
+    <div class="wrapper">
+        <div id="start-screen" class="start">
+            <h1>Coding Quiz!</h1>
+                <p> How well do you know code? Quiz yourself on coding knowledge within the time limit given.
+                    Keep in mind your time will be penalized for incorrect answers!
+                </p>
+                    <button id="begin">Begin Quiz</button>
+    </div>
 
+    <div id="questions" class="hide">
+        <h2 id="question-title"></h2>
+            <div id="choices" class="choices"></div>
+    </div>
+    
+    <div id="end-screen" class="hide">
+        <h3>Finished!</h3>
+            <p>Here is your final score<span id="final-score"></span>!</p>
+                <p>Please enter your initials: <input type="text" id="initials"/>
+                <button id="submit">Submit</button>
+                </p>
+    </div>
+
+    <div id="feedback" class="feedback hide"></div>
+
+
+</div>
 
 
 
