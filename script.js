@@ -1,38 +1,11 @@
 
 
-// GIVEN I am taking a code quiz
-// WHEN I click the start button
-// THEN a timer starts and 
-// I am presented with a question     <<---how does this happen?!?!?>>
-// WHEN I answer a question correctly    <<HOW WILL THE CODE KNOW WHICH ANSWER IS CORRECT?>>
-// THEN I am presented with another question   <<--FUNCTION>>
-// WHEN I answer a question incorrectly
-// THEN time is subtracted from the clock
-// WHEN all questions are answered or the timer reaches 0    <<--FUNCTION AGAIN  >>
-// THEN the game is over
-// WHEN the game is over
-// THEN I can save my initials and score
-
-
-
-// need to display a code quiz that prompts the user to "start quiz"
-// need to input a timer 
-
-// present question using a function
-// user answers it correctly
-// then present user with another question using a function
-// user answers incorrectly
-// then subtract time from the clock
-// when all questions are answered or timer reaches 0 add in another function
-// then the game ends 
-// then prompt user to save initials and score 
-
 
 
 
 
 //question array
-var questionsArr = [{title: "Commonly used data types don't include:", 
+var questions = [{title: "Commonly used data types don't include:", 
                    choices: ["strings", "alerts", "booleans", "numbers"],
                    answer: "alerts"
                  },
@@ -57,7 +30,7 @@ var questionsArr = [{title: "Commonly used data types don't include:",
 
               ];
 
-//
+
 var currQuestionIdx = 0;
 var time = questions.length * 30;
 var timerId;
@@ -72,48 +45,46 @@ var feedbackEl = document.getElementById("feedback");
 var questionsEl = document.getElementById("questions");
 
 
+function beginQuiz() {                     
+   var startScreenEl = document.getElementById("start screen");
 
-
-
-
-function beginQuiz(){                     
-   var startScreenEl = document.getElementById("start-screen");
      startScreenEl.setAttribute("class", "hide");     //hide start screen
+
       questionsEl.removeAttribute("class");
 
-   timerId = setInterval(function(){     
-    time--;
-    timerEl.textContent = time;   //update the time
-    if (time <= 0){
-      quizEnd();
-    }
-    startQuestion();
-   }, 1000);
+        timerId = setInterval(clockTick, 2000);     //start of timer
+
+      timerEl.textContent = time;   //showing the start of the time
+
+    
+          
+   }  startQuestion();  
 
 
-   function startQuestion () {
-    var currQuestion = questionsArr[currQuestionIdx];  //need to fix probably
-      var titleEl = document.getElementById("question-title");
-        titleEl.textContent = currentQuestion.title;
+   function startQuestion() {
+    var currQuestion = questions[currQuestionIdx];  //current question from the array 
+      var titleEl = document.getElementById("question title");
+        titleEl.textContent = currQuestion.title;
 
     choicesEl.innerHTML = ""; //clear old questions
 
+              //loop through choices here
     currQuestion.choices.forEach(function (choice) {
-        var optionsNode = document.createElement("button");
-          optionsNode.setAttribute("class", "choice");
-           optionsNode.setAttribute("value", choice);
-            optionsNode.textContent = choice;
-
-            optionsNode.onClick = questionClick;
-          choicesEl.appendChild(optionsNode);
+        var optionNode = document.createElement("button");
+          optionNode.setAttribute("class", "choice");
+           optionNode.setAttribute("value", choice);
+            optionNode.textContent = choice;
+                //
+            optionNode.onClick = questionClick;
+          choicesEl.appendChild(optionNode);
 
     });
  }
    
 
    function questionClick() {          
-    if (this.value !== questions[questionIndex].answer) {
-      time -=10;     //time gets penalized
+    if (this.value !== questions[currQuestionIdx].answer) {
+      time -= 10;     //time gets penalized
       
       if (time < 0) {
         time = 0;
@@ -124,37 +95,57 @@ function beginQuiz(){
     } else{
       feedbackEl.textContent = "Wrong!";
     }
-  
+              //will flash right or wrong on page for user to see
     feedbackEl.setAttribute("class", "feedback");
       setTimeout(function() {
         feedbackEl.setAttribute("class", "feedback hide");
-        console.log(feedbackEl);
-  
+        
       }, 2000);
   
       currQuestionIdx++;
 
-    if (currQuestionIdx === questionsArr.length) {
-          quizEnd ();
+    if (currQuestionIdx === questions.length) {
+          endQuiz ();
 
     } else {
       startQuestion();
     }
    }
    
-   function endQuiz () {
-     clearInterval (timerId);
-        var endScreenEl = document.getElementById("end-screen");  
+   function endQuiz() {
+     clearInterval (timerId);  //timer stopped
+        var endScreenEl = document.getElementById("end screen");  
           endScreenEl.removeAttribute("class");
-            var finalScoreEl = document.getElementById("final-score");
+            var finalScoreEl = document.getElementById("final score");
             finalScoreEl.textContent = time;
 
             questionsEl.setAttribute("class", "hide");
 
       }
 
+      function clockTick() {     //supposed to make the timer run
+        time--;
+        timerEl.textContent = time;
+
+        if (time <= 0) {
+          endQuiz();
+        }
+      }
+
+
+
+
+      //player clicks button to begin quiz
+      beginBtn.onclick = beginQuiz;
+
+      
+      
+      
+
+
   
 
-            //add event listener to button clicks 
-      document.getElementById("beginBtn").addEventListener("click", beginBtn);
+     
+
+          
 
