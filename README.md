@@ -1,9 +1,7 @@
 # Coding-Quiz
 
 ## Description
-    This coding-quiz is supposed to allow the user to click on the begin button to start the quiz. Once the quiz begins, a timer starts to count down from 30 seconds. If the user clicks the correct answer the screen will display a "Right!" or "Wrong!" answer. If the user picks incorrectly, though, time will be penalized. After all questions are asked it would then prompt the user to enter their initials and it would show them their high scores.  
-
-    I really struggled with this assignment to be honest. I was not able to get the code working the way I wanted with the event listeners, the loop through of my array, and getting the timer to work. I'd like to re-submit this assignment once I get a better understanding of what I am doing wrong and how to debug it in order for it to work for the user and so I can code it in the future.
+ This coding-quiz is supposed to allow the user to click on the begin button to start the quiz. Once the quiz begins, a timer starts to count down from 30 seconds. If the user clicks the correct answer the screen will display a "Right!" or "Wrong!" answer. If the user picks incorrectly, though, time will be penalized. After all questions are asked it would then prompt the user to enter their initials and it would show them their high scores.  
 
 
 
